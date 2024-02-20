@@ -1,13 +1,13 @@
 package com.taskmgnt.config;
 
-import java.util.Collections;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.crypto.SecretKey;
 
-import org.hibernate.mapping.Collection;
+import java.util.Collection;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -21,8 +21,9 @@ public class JwtProvider {
 	 
 	 
 	 
-	 public static String generateToken(Authentication auth) {
-		 Collection<? extends GrantedAuthority> authorities=auth.getAuthorities();
+	 public static String generateToken(Authentication auth)
+	 {
+		 Collection<? extends GrantedAuthority > authorities=auth.getAuthorities();
 		 String role=populatesAuthorities(authorities);
 		 
 		 String jwt=Jwts.builder().setIssuedAt(new Date()).setExpiration(new Date(new Date().getTime()+86500000)).
@@ -37,7 +38,7 @@ public class JwtProvider {
 	 
 	 public static String getEmailFromJwtToken(String jwt) {
 		 jwt=jwt.substring(7);
-		 Claims claims=Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJwt(jwt).getBody();
+		 Claims claims=Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
 		 String email=String.valueOf(claims.get("email"));
 		 return email;
 	 }
