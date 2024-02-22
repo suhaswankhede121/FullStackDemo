@@ -1,5 +1,7 @@
 package com.taskmgnt.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,5 +25,12 @@ public class UserController {
 		User user=userService.getUserProfile(jwt);
 		return new ResponseEntity<>(user,HttpStatus.OK);
 	}
+	
+	@GetMapping()
+	public ResponseEntity<List<User>> getUsers(@RequestHeader("Authorization") String jwt){
+		List<User> users=userService.getAllUsers();
+		return new ResponseEntity<>(users,HttpStatus.OK);
+	}
+	
 
 }
